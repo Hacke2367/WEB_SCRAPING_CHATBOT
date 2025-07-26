@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/ # Common for venv created by VS Code or poetry
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Environment Variables
+.env # Crucial: Never commit your .env file containing secrets!
+
+# IDEs and Editors
+.idea/          # JetBrains IDEs (e.g., PyCharm)
+.vscode/        # VS Code settings
+*.sublime-project
+*.sublime-workspace
+
+# Operating System Files
+.DS_Store       # macOS
+Thumbs.db       # Windows
+
+# Logs
+*.log
+logs/           # Directory for application logs
+
+# Data (consider if you want to version control small datasets)
+data/raw/       # Raw scraped data can be large and regenerated
+data/processed/ # Processed data, typically regenerated from raw
+data/embeddings/ # Embeddings can be very large and regenerated
+
+# Docker
+.dockerignore
+!docker-compose.yml # Include docker-compose.yml if you want to version it
+
+# Playwright
+node_modules/

@@ -1,2 +1,7 @@
 dotenv
+typing
+playwright
+bs4
+langchain
+sentence_transformers
 loguru

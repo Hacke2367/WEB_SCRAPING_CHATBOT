@@ -4,4 +4,5 @@ playwright
 bs4
 langchain
 sentence_transformers
+pinecone
 loguru

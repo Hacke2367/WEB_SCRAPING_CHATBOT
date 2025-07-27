@@ -23,6 +23,7 @@ class Config:
     PINECONE_API_KEY: str | None = os.getenv("PINECONE_API_KEY")
     PINECONE_ENVIRONMENT: str | None = os.getenv("PINECONE_ENVIRONMENT")
     PINECONE_INDEX_NAME: str = os.getenv("PINECONE_INDEX_NAME", "llmchatbot-index")
+    NUMBER_OF_RETRIEVED_DOCS: int = int(os.getenv("NUMBER_OF_RETRIEVED_DOCS", 4))
 
     ##DATA PREPROCESSING SETTING
     SCRAPING_URLS: list[str] = [

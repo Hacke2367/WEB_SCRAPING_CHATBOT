@@ -9,6 +9,7 @@ langchain-core
 langchain-community
 langchain-openai
 sentence_transformers
+langchain-pinecone
 pinecone
 fastapi
 uvicorn

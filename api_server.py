@@ -25,9 +25,9 @@ app = FastAPI(
 
 origins = [
     "http://localhost",
-    "http://localhost:8501", # Default Streamlit port
+    "http://localhost:8501",
     "http://127.0.0.1:8501",
-    "http://localhost:8000", # Default FastAPI port
+    "http://localhost:8000",
     "http://127.0.0.1:8000",
 ]
 
@@ -55,9 +55,6 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """
-    Closes RAGChain resources when the FastAPI application shuts down.
-    """
     global rag_system
     if rag_system:
         logger.info("FastAPI shutdown event: Closing RAG Chain resources...")

@@ -5,4 +5,7 @@ bs4
 langchain
 sentence_transformers
 pinecone
+fastapi
+uvicorn
+pydantic
 loguru

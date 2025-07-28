@@ -50,7 +50,3 @@ if not Config.DEBUG:
     if Config.VECTOR_DB_PROVIDER == "pinecone" and (not Config.PINECONE_ENVIRONMENT or Config.PINECONE_API_KEY):
         raise ValueError("Critical: Pinecone API Key or Enviroment not found for pinecone provihder. cannot proceed in non-debug mode.")
 
-
-
-
-

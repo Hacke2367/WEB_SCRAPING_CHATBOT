@@ -10,7 +10,6 @@ langchain-community
 langchain-openai
 sentence_transformers
 pinecone
-pinecone-client
 fastapi
 uvicorn
 pydantic

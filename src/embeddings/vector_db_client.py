@@ -1,5 +1,5 @@
 import asyncio
-from pinecone import Pinecone, PodSpec, ServerlessSpec
+from pinecone import Pinecone
 from typing import List, Dict
 from langchain_core.embeddings import Embeddings
 from langchain_pinecone import PineconeVectorStore

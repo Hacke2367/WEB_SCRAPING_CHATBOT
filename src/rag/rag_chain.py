@@ -19,7 +19,6 @@ class RAGChain:
 
     def __init__(self, pinecone_index_name: str = Config.PINECONE_INDEX_NAME):
         self.retriever = ContentRetriever(pinecone_index_name)
-        # Initialize LLM. Make sure OPENAI_API_KEY is set in your .env
         self.llm = ChatOpenAI(model_name=Config.LLM_MODEL_NAME, temperature=Config.LLM_TEMPERATURE
                               )
         self.rag_chain = None
@@ -30,11 +29,13 @@ class RAGChain:
         logger.info("Retriever initialized for RAGChain.")
 
         prompt = ChatPromptTemplate.from_template(
-            """Answer the question based ONLY on the following context:
-                        {context}
-    
-                        Question: {question}
-                        """
+            """Using the following context, please answer the question thoroughly and comprehensively. Provide as much relevant detail as possible based on the provided information, but do not make up information outside the context.
+
+            Context:
+            {context}
+
+            Question: {question}
+            """
         )
 
         def format_docs(docs: List[Document]) -> str:
@@ -81,8 +82,6 @@ class RAGChain:
 
 if __name__ == "__main__":
     async def run_rag_chain_test():
-        # Ensure your OPENAI_API_KEY is set in your .env file
-        # os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY_HERE" # Uncomment and set if not in .env
 
         if not os.getenv("OPENAI_API_KEY"):
             logger.error("OPENAI_API_KEY environment variable not set. Please set it to run this test.")
@@ -96,7 +95,7 @@ if __name__ == "__main__":
             "Tell me about Jewel Changi Airport's main attraction.",
             "What services are available for arriving passengers at Changi Airport?",
             "Is there a hotel at Jewel Changi Airport?",
-            "What is the capital of France?" # Example of a query outside the scraped content
+            "What is the capital of France?"
         ]
 
         for query in test_queries:

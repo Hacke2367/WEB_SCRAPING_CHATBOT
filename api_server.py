@@ -43,9 +43,7 @@ rag_system: RAGChain | None = None
 
 @app.on_event("startup")
 async def startup_event():
-    """
-    Initializes the RAGChain when the FastAPI application starts up.
-    """
+
     global rag_system
     logger.info("FastAPI startup event: Initializing RAG Chain...")
     try:
@@ -71,9 +69,6 @@ class QueryRequest(BaseModel):
 
 @app.post("/chat")
 async def chat_endpoint(request: QueryRequest):
-    """
-    Receives a user query and returns a RAG-generated response.
-    """
     if not rag_system:
         logger.error("RAG system not initialized. Cannot process query.")
         raise HTTPException(status_code=503, detail="Chat service is not ready. Please try again later.")
@@ -95,9 +90,6 @@ async def chat_endpoint(request: QueryRequest):
 
 @app.get("/health")
 async def health_check():
-    """
-    Health check endpoint to verify if the API is running and RAG system is ready.
-    """
     if rag_system:
         return {"status": "ok", "message": "RAG Chatbot API is running and ready."}
     else:
@@ -105,8 +97,6 @@ async def health_check():
 
 if __name__ == "__main__":
     logger.info("Starting FastAPI server...")
-    # To run this file, use: uvicorn api_server:app --reload
-    # Or for simple execution via script:
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 

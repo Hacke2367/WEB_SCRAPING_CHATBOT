@@ -13,7 +13,7 @@ class Config:
     LLM_MODEL_NAME: str = os.getenv("LLM_MODEL_NAME", "gpt-3.5-turbo")
     OPENAI_API_KEY: str | None = os.getenv("OPENAI_API_KEY")
     HUGGINGFACE_API_KEY: str | None = os.getenv("HUGGINGFACE_API_KEY")
-    LLM_TEMPERATURE: int = 0
+    LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", 0.7))
 
     ## EMBEDDINGS SETTINGS
     EMBEDDING_MODEL_NAME: str = os.getenv("EMBEDDING_MODEL_NAME", "all-MiniLM-L6-v2")

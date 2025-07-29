@@ -7,6 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 
+load_dotenv()
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 
 from src.rag.rag_chain import RAGChain
@@ -14,13 +16,13 @@ from src.config import Config
 from src.utils.logger import get_logger
 from src.utils.exceptions import GenerationException, VectorDBException, EmbeddingException
 
-
 logger = get_logger(__name__)
 
 app = FastAPI(
-    title="RAG Chatbot API",
+    title=Config.APP_NAME,
     description="API for a Retrieval-Augmented Generation (RAG) chatbot.",
-    version="1.0.0",
+    version=Config.APP_VERSION,
+    debug=Config.DEBUG
 )
 
 origins = [
@@ -29,6 +31,7 @@ origins = [
     "http://127.0.0.1:8501",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+
 ]
 
 app.add_middleware(
@@ -43,7 +46,6 @@ rag_system: RAGChain | None = None
 
 @app.on_event("startup")
 async def startup_event():
-
     global rag_system
     logger.info("FastAPI startup event: Initializing RAG Chain...")
     try:
@@ -63,6 +65,20 @@ async def shutdown_event():
 
 class QueryRequest(BaseModel):
     query: str
+
+@app.get("/")
+async def read_root():
+    logger.info("Root endpoint hit.")
+    return {"message": "API is running and healthy!"}
+
+@app.get("/health")
+async def health_check():
+    logger.info("Health check endpoint hit.")
+    if rag_system:
+        return {"status": "ok", "message": "RAG Chatbot API is running and ready."}
+    else:
+        raise HTTPException(status_code=503, detail="RAG Chatbot API is starting up or has issues.")
+
 
 @app.post("/chat")
 async def chat_endpoint(request: QueryRequest):
@@ -85,16 +101,7 @@ async def chat_endpoint(request: QueryRequest):
         logger.exception(f"An unexpected error occurred during chat processing for query '{request.query}': {e}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred.")
 
-@app.get("/health")
-async def health_check():
-    if rag_system:
-        return {"status": "ok", "message": "RAG Chatbot API is running and ready."}
-    else:
-        raise HTTPException(status_code=503, detail="RAG Chatbot API is starting up or has issues.")
-
 if __name__ == "__main__":
     logger.info("Starting FastAPI server...")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
+    uvicorn.run(app, host=Config.API_HOST, port=Config.API_PORT)
 

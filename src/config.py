@@ -42,7 +42,7 @@ class Config:
 
     # -- LOGGING SETTINGS ---
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()
-    LOG_FILE: str = os.getenv("LOG_FILE", "/tmp/app.log")
+    LOG_FILE: str = os.getenv("LOG_FILE", "app.log")
 
 if not Config.DEBUG:
     if not Config.OPENAI_API_KEY and not Config.HUGGINGFACE_API_KEY:
